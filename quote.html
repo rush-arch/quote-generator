@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inspiration & Fun Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #fff;
+      user-select: none;
+      text-align: center;
+      flex-direction: column;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      max-width: 700px;
+      width: 100%;
+      padding: 40px 35px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 25px;
+      letter-spacing: 2px;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+
+    .content-box {
+      margin-bottom: 30px;
+    }
+
+    .text {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      font-style: italic;
+      padding: 0 20px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      min-height: 100px;
+      margin-bottom: 15px;
+    }
+
+    .author {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #d3cce3;
+      margin-bottom: 25px;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.3);
+    }
+
+    button {
+      background: #fff;
+      color: #764ba2;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 14px 45px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(118,75,162,0.4);
+      transition: all 0.3s ease;
+      letter-spacing: 1.2px;
+      user-select: none;
+      margin: 10px;
+    }
+    button:hover {
+      background: #764ba2;
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(118,75,162,0.7);
+      transform: translateY(-3px);
+    }
+
+    .footer {
+      font-size: 0.9rem;
+      color: #e0d1f5;
+      margin-top: 10px;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .text {
+        font-size: 1.2rem;
+        min-height: 80px;
+      }
+      button {
+        font-size: 1rem;
+        padding: 12px 35px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Inspiration & Fun Generator</h1>
+
+    <!-- Inspirational Quote -->
+    <div class="content-box">
+      <div id="quote" class="text">Click the button to get an inspiring quote!</div>
+      <div id="author" class="author"></div>
+      <button onclick="getInspiration()">Get Inspiring Quote</button>
+    </div>
+
+    <!-- Funny Story -->
+    <div class="content-box">
+      <div id="story" class="text">Or click below for a short funny story!</div>
+      <button onclick="getFunnyStory()">Tell Me a Funny Story</button>
+    </div>
+  </div>
+
+  <div class="footer">Made by <strong>NIYIBIZI Jean Baptiste</strong>  contact : +250793414290</div>
+
+  <script>
+    const quoteBox = document.getElementById('quote');
+    const authorBox = document.getElementById('author');
+    const storyBox = document.getElementById('story');
+
+    const inspirationalQuotes = [
+      { q: "The best way to predict the future is to invent it.", a: "Alan Kay" },
+      { q: "Success is not final, failure is not fatal: It is the courage to continue that counts.", a: "Winston Churchill" },
+      { q: "Act as if what you do makes a difference. It does.", a: "William James" },
+      { q: "Start where you are. Use what you have. Do what you can.", a: "Arthur Ashe" },
+      { q: "Don't watch the clock; do what it does. Keep going.", a: "Sam Levenson" },
+    ];
+
+    function getInspiration() {
+      const index = Math.floor(Math.random() * inspirationalQuotes.length);
+      const quote = inspirationalQuotes[index];
+      quoteBox.textContent = `"${quote.q}"`;
+      authorBox.textContent = `— ${quote.a}`;
+    }
+
+    async function getFunnyStory() {
+      storyBox.textContent = "Loading funny story... 😂";
+
+      try {
+        // You can replace this with a real funny story API
+        // For demo, let's simulate with a joke API
+        const res = await fetch('https://v2.jokeapi.dev/joke/Any?type=single');
+        const data = await res.json();
+
+        if (data && data.joke) {
+          storyBox.textContent = data.joke;
+        } else {
+          storyBox.textContent = "Couldn't fetch a story. Try again!";
+        }
+      } catch (err) {
+        storyBox.textContent = "Oops! No laughs for now. 😢";
+        console.error(err);
+      }
+    }
+  </script>
+
+</body>
+</html>
